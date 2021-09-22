@@ -1,0 +1,42 @@
+<template>
+  <div class="login-phone">
+    <el-form label-width="60px" :rules="rules" :model="userInfo">
+      <el-form-item label="手机号" prop="phone">
+        <el-input v-model="userInfo.phone" type="phone" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="验证码" prop="verifyCode">
+        <div class="get-code">
+          <el-input v-model="userInfo.verifyCode" type="password" autocomplete="off"></el-input>
+          <el-button class="get-button" type="primary">获取验证码</el-button>
+        </div>
+      </el-form-item>
+    </el-form>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, reactive } from 'vue'
+
+import { rules } from '../config/account-config'
+
+export default defineComponent({
+  setup() {
+    const userInfo = reactive({
+      phone: '',
+      verifyCode: ''
+    })
+
+    return { userInfo, rules }
+  }
+})
+</script>
+
+<style scoped lang="scss">
+.get-code {
+  display: flex;
+
+  .get-button {
+    margin-left: 8px;
+  }
+}
+</style>

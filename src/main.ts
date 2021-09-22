@@ -1,5 +1,8 @@
 import { createApp } from 'vue'
 
+import 'normalize.css'
+import './assets/css/index.scss'
+
 import router from './router'
 import store from './store'
 
