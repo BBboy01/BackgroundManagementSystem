@@ -1,14 +1,14 @@
-import type { AxiosRequestConfig } from 'axios'
+import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 
-interface BBRequestInterceptors {
+interface BBRequestInterceptors<T = AxiosResponse> {
   requestInterceptor?: (config: AxiosRequestConfig) => AxiosRequestConfig
   requestInterceptorCatch?: (error: any) => any
-  responseInterceptor?: (res: any) => any
+  responseInterceptor?: (res: T) => T
   responseInterceptorCatch?: (error: any) => any
 }
 
-interface BBRequestConfig extends AxiosRequestConfig {
-  interceptors?: BBRequestInterceptors
+interface BBRequestConfig<T = AxiosResponse> extends AxiosRequestConfig {
+  interceptors?: BBRequestInterceptors<T>
   showLoading?: boolean
 }
 

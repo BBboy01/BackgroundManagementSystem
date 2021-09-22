@@ -50,7 +50,7 @@ class BBRequest {
     })
   }
 
-  request<T>(config: BBRequestConfig): Promise<T> {
+  request<T>(config: BBRequestConfig<T>): Promise<T> {
     return new Promise((resolve, reject) => {
       if (config.interceptors?.requestInterceptor) {
         config = config.interceptors.requestInterceptor(config)
@@ -76,16 +76,16 @@ class BBRequest {
     })
   }
 
-  get<T>(config: BBRequestConfig): Promise<T> {
+  get<T>(config: BBRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'GET' })
   }
-  post<T>(config: BBRequestConfig): Promise<T> {
+  post<T>(config: BBRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'POST' })
   }
-  delete<T>(config: BBRequestConfig): Promise<T> {
+  delete<T>(config: BBRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'DELETE' })
   }
-  patch<T>(config: BBRequestConfig): Promise<T> {
+  patch<T>(config: BBRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'PATCH' })
   }
 }
