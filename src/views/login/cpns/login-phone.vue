@@ -17,16 +17,24 @@
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
 
+import cache from '@/utils/cache'
+
 import { rules } from '../config/account-config'
 
 export default defineComponent({
   setup() {
     const userInfo = reactive({
-      phone: '',
+      phone: cache.getCache('phone') ?? '',
       verifyCode: ''
     })
 
-    return { userInfo, rules }
+    const loginAction = (isKeepLoginStatus: boolean) => {
+      if (isKeepLoginStatus) {
+        cache.setCache('phone', userInfo.phone)
+      }
+    }
+
+    return { userInfo, rules, loginAction }
   }
 })
 </script>

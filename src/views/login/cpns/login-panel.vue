@@ -1,18 +1,18 @@
 <template>
   <div class="login-panel">
     <h1 class="title">后台管理系统</h1>
-    <el-tabs type="border-card" stretch>
-      <el-tab-pane>
+    <el-tabs type="border-card" stretch v-model="currentTab">
+      <el-tab-pane name="account">
         <template #label>
           <span><i class="el-icon-user-solid"></i> 账号登录</span>
         </template>
-        <login-account :ref="accountRef" />
+        <login-account ref="accountRef" />
       </el-tab-pane>
-      <el-tab-pane>
+      <el-tab-pane name="phone">
         <template #label>
           <span><i class="el-icon-mobile-phone"></i> 手机号登录</span>
         </template>
-        <login-phone />
+        <login-phone ref="phoneRef" />
       </el-tab-pane>
     </el-tabs>
 
@@ -32,15 +32,20 @@ import LoginPhone from './login-phone.vue'
 
 export default defineComponent({
   setup() {
-    const isKeepLoginStatus = ref(true)
+    const isKeepLoginStatus = ref<boolean>(true)
+    const currentTab = ref<string>('account')
 
     const accountRef = ref<InstanceType<typeof LoginAccount>>()
+    const phoneRef = ref<InstanceType<typeof LoginPhone>>()
 
     const handleLogin = () => {
-      accountRef.value?.loginAction()
+      if (currentTab.value === 'account') {
+        accountRef.value?.loginAction(isKeepLoginStatus.value)
+      }
+      phoneRef.value?.loginAction(isKeepLoginStatus.value)
     }
 
-    return { isKeepLoginStatus, handleLogin, accountRef }
+    return { isKeepLoginStatus, handleLogin, accountRef, currentTab, phoneRef }
   },
   components: { LoginAccount, LoginPhone }
 })
