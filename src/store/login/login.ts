@@ -5,6 +5,7 @@ import {
   requestUserInfoByID,
   requestUserMenuByRoleID
 } from '@/service/login/login'
+import mapMenus2Routes from '@/utils/map-menus'
 
 import type { IAccount } from '@/service/login/types'
 import type { Module } from 'vuex'
@@ -30,6 +31,10 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     changeUserMenu(state, menus: any) {
       state.menus = menus
+      // userMenus => routes
+      const routes = mapMenus2Routes(menus)
+      // routes => router.main.children
+      routes.forEach((route) => router.addRoute('main', route))
     }
   },
   actions: {
