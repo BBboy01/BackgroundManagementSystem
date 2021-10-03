@@ -12,10 +12,10 @@ import App from './App.vue'
 
 const app = createApp(App)
 
-app.use(router).use(store)
-
 app.use(registerApp)
-
+app.use(store)
 setupStore()
+
+app.use(router)
 
 app.mount('#app')

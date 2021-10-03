@@ -5,7 +5,7 @@
       <span class="title" v-if="!collapse">Vue3 + TS</span>
     </div>
     <el-menu
-      default-active="2"
+      :default-active="defaultValue"
       class="el-menu-vertical"
       background-color="#0c2135"
       text-color="#b7bdc3"
@@ -41,10 +41,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { defineComponent, computed, ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
 import { useStore } from '@/store'
+import { pathMap2Menu } from '@/utils/map-menus'
 
 export default defineComponent({
   props: {
@@ -56,15 +57,21 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const router = useRouter()
+    const currentPath = useRoute().path
 
     const userMenus = computed(() => store.state.loginModule.menus)
+
+    const menu = pathMap2Menu(userMenus.value, currentPath)
+
+    const defaultValue = ref(menu.id + '')
+
     const handleItemMenuClick = (item: any) => {
       router.push({
         path: item.url || 'not-found'
       })
     }
 
-    return { userMenus, handleItemMenuClick }
+    return { userMenus, handleItemMenuClick, defaultValue }
   }
 })
 </script>

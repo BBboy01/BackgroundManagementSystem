@@ -1,11 +1,11 @@
 import router from '@/router'
 import cache from '@/utils/cache'
+import mapMenus2Routes from '@/utils/map-menus'
 import {
   accountLoginRequest,
   requestUserInfoByID,
   requestUserMenuByRoleID
 } from '@/service/login/login'
-import mapMenus2Routes from '@/utils/map-menus'
 
 import type { IAccount } from '@/service/login/types'
 import type { Module } from 'vuex'

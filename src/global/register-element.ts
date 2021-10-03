@@ -9,13 +9,20 @@ import {
   ElContainer,
   ElMenu,
   ElDropdown,
-  ElAvatar
+  ElAvatar,
+  ElRow,
+  ElCol,
+  ElSelect,
+  ElDatePicker,
+  ElBreadcrumb
 } from 'element-plus'
 import { ElTabPane } from 'element-plus/lib/components/tabs'
 import { ElFormItem } from 'element-plus/lib/components/form'
 import { ElSubMenu, ElMenuItemGroup, ElMenuItem } from 'element-plus/lib/components/menu'
 import { ElAside, ElHeader, ElMain } from 'element-plus/lib/components/container'
 import { ElDropdownMenu, ElDropdownItem } from 'element-plus/lib/components/dropdown'
+import { ElOption } from 'element-plus/lib/components/select'
+import { ElBreadcrumbItem } from 'element-plus/lib/components/breadcrumb'
 
 const components = [
   ElButton,
@@ -37,7 +44,14 @@ const components = [
   ElDropdown,
   ElDropdownMenu,
   ElDropdownItem,
-  ElAvatar
+  ElAvatar,
+  ElRow,
+  ElCol,
+  ElSelect,
+  ElOption,
+  ElDatePicker,
+  ElBreadcrumb,
+  ElBreadcrumbItem
 ]
 
 export default function (app: App): void {

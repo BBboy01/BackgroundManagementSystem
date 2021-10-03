@@ -6,29 +6,45 @@
       @click="handleFoldClick"
     ></i>
     <div class="content">
-      <div>menu</div>
+      <hy-breadcrumb :breadcrumbs="breadcrumbs" />
       <user-info></user-info>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { useStore } from '@/store'
 
 import UserInfo from './user-info.vue'
+import HyBreadcrumb from '@/base-ui/breadcrumb'
+import { pathMap2Breadcrumbs } from '@/utils/map-menus'
+
+import type { IBreadCrumb } from '@/base-ui/breadcrumb'
 
 export default defineComponent({
   emits: ['foldChange'],
   setup(props, { emit }) {
+    const store = useStore()
+    const route = useRoute()
     const isFold = ref<boolean>(false)
 
     const handleFoldClick = () => {
       isFold.value = !isFold.value
       emit('foldChange', isFold.value)
     }
-    return { handleFoldClick, isFold }
+    const userMenus = store.state.loginModule.menus
+
+    const breadcrumbs = computed<IBreadCrumb[]>(() => {
+      const currentPath = route.path
+
+      return pathMap2Breadcrumbs(userMenus, currentPath)
+    })
+
+    return { handleFoldClick, isFold, breadcrumbs }
   },
-  components: { UserInfo }
+  components: { UserInfo, HyBreadcrumb }
 })
 </script>
 
