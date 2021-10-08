@@ -1,14 +1,16 @@
 <template>
   <div class="main">
     <el-container class="main-content">
-      <el-aside :width="isCollapsed ? '60px' : '210px'"
-        ><nav-menu :collapse="isCollapsed"
-      /></el-aside>
+      <el-aside :width="isCollapsed ? '60px' : '210px'">
+        <nav-menu :collapse="isCollapsed" />
+      </el-aside>
       <el-container class="page">
         <el-header class="page-header"><nav-header @foldChange="handleFoldChange" /></el-header>
-        <el-main class="page-content"
-          ><div class="page-info"><router-view /></div
-        ></el-main>
+        <el-main class="page-content">
+          <div class="page-info">
+            <router-view />
+          </div>
+        </el-main>
       </el-container>
     </el-container>
   </div>

@@ -5,6 +5,7 @@ interface OptionType {
 }
 
 export interface IFormItem {
+  field: string
   type: IFormType
   label: string
   placeholder?: any

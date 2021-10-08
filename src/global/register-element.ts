@@ -14,7 +14,8 @@ import {
   ElCol,
   ElSelect,
   ElDatePicker,
-  ElBreadcrumb
+  ElBreadcrumb,
+  ElTable
 } from 'element-plus'
 import { ElTabPane } from 'element-plus/lib/components/tabs'
 import { ElFormItem } from 'element-plus/lib/components/form'
@@ -23,6 +24,7 @@ import { ElAside, ElHeader, ElMain } from 'element-plus/lib/components/container
 import { ElDropdownMenu, ElDropdownItem } from 'element-plus/lib/components/dropdown'
 import { ElOption } from 'element-plus/lib/components/select'
 import { ElBreadcrumbItem } from 'element-plus/lib/components/breadcrumb'
+import { ElTableColumn } from 'element-plus/lib//components/table'
 
 const components = [
   ElButton,
@@ -51,7 +53,9 @@ const components = [
   ElOption,
   ElDatePicker,
   ElBreadcrumb,
-  ElBreadcrumbItem
+  ElBreadcrumbItem,
+  ElTable,
+  ElTableColumn
 ]
 
 export default function (app: App): void {

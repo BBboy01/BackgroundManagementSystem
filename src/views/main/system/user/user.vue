@@ -1,24 +1,76 @@
 <template>
   <div class="user">
-    <div class="search">
-      <hy-form v-bind="searchFormConfig" />
-    </div>
+    <page-search :searchFormConfig="searchFormConfig" />
+
+    <hy-table
+      :userList="userList"
+      :propList="propList"
+      :showIndexColumn="showIndexColumn"
+      :showSelectColumn="showSelectColumn"
+      @selectionChange="handleSelectionChange"
+    >
+      <template #enable="innerData">
+        <el-button plain size="mini" :type="innerData.row.enable ? 'primary' : 'danger'">{{
+          innerData.row.enable ? '启用' : '禁用'
+        }}</el-button>
+      </template>
+      <template #createAt="innerData">
+        <span>{{ $filters.formatTime(innerData.row.createAt) }}</span>
+      </template>
+      <template #updateAt="innerData">
+        <span>{{ $filters.formatTime(innerData.row.updateAt) }}</span>
+      </template>
+      <template #action>
+        <el-button size="mini" type="text" icon="el-icon-edit">编辑</el-button>
+        <el-button size="mini" type="text" icon="el-icon-delete">删除</el-button>
+      </template>
+    </hy-table>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
+import { useStore } from 'vuex'
 
-import HyForm from '@/base-ui/form'
+import PageSearch from '@/components/page-search'
+import HyTable from '@/base-ui/table'
 
-import { searchFormConfig } from './config/search.config'
+import { searchFormConfig, propList } from './config/search.config'
 
 export default defineComponent({
   name: 'user',
   setup() {
-    return { searchFormConfig }
+    const store = useStore()
+
+    store.dispatch('systemModule/getPageListAction', {
+      pageUrl: 'users/list',
+      queryInfo: {
+        offset: 0,
+        size: 10
+      }
+    })
+
+    const userList = computed(() => store.state.systemModule.userList)
+
+    const userCount = computed(() => store.state.systemModule.userCount)
+
+    const showIndexColumn = true
+    const showSelectColumn = true
+
+    const handleSelectionChange = (value: any) => {
+      console.log(value)
+    }
+
+    return {
+      searchFormConfig,
+      userList,
+      propList,
+      showIndexColumn,
+      showSelectColumn,
+      handleSelectionChange
+    }
   },
-  components: { HyForm }
+  components: { PageSearch, HyTable }
 })
 </script>
 

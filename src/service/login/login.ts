@@ -1,6 +1,7 @@
 import bbRequest from '../index'
 
-import type { IAccount, ILoginResult, IDataType } from './types'
+import type { IAccount, ILoginResult } from './types'
+import { IDataType } from '../types'
 
 enum LoginAPI {
   AccountLogin = '/login',
