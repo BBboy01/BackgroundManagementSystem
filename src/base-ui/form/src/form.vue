@@ -35,11 +35,6 @@
             </el-form-item>
           </el-col>
         </template>
-        <el-col :span="8">
-          <el-form-item label="用户名">
-            <el-input />
-          </el-form-item>
-        </el-col>
       </el-row>
     </el-form>
     <div class="footer">
@@ -49,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from 'vue'
+import { defineComponent, PropType, ref, watch, computed } from 'vue'
 
 import type { IFormItem } from '../types'
 

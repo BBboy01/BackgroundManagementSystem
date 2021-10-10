@@ -6,8 +6,12 @@
       </template>
       <template #footer>
         <div class="handle-btn">
-          <el-button type="primary" icon="el-icon-refresh">重置</el-button>
-          <el-button type="primary" icon="el-icon-search">搜索</el-button>
+          <el-button type="primary" icon="el-icon-refresh" @click="handleResetClick">
+            重置
+          </el-button>
+          <el-button type="primary" icon="el-icon-search" @click="handleQueryClick">
+            搜索
+          </el-button>
         </div>
       </template>
     </hy-form>
@@ -26,16 +30,28 @@ export default defineComponent({
       required: true
     }
   },
-  setup() {
-    const formData = ref({
-      id: '',
-      name: '',
-      password: '',
-      sport: '',
-      createTime: ''
-    })
+  emits: ['resetBtnClick', 'queryBtnClick'],
+  setup(props, { emit }) {
+    const formItems = props.searchFormConfig.formItems ?? []
+    const formOriginalData: any = {}
+    for (const item of formItems) {
+      formOriginalData[item.field] = ''
+    }
 
-    return { formData }
+    const formData = ref(formOriginalData)
+
+    const handleResetClick = () => {
+      for (const key in formOriginalData) {
+        formData.value[key] = formOriginalData[key]
+      }
+      emit('resetBtnClick')
+    }
+
+    const handleQueryClick = () => {
+      emit('queryBtnClick', formData.value)
+    }
+
+    return { formData, handleResetClick, handleQueryClick }
   },
   components: { HyForm }
 })

@@ -4,7 +4,7 @@ import { IBreadCrumb } from '@/base-ui/breadcrumb'
 
 export let firstMenu: any = null
 
-export default function mapMenus2Routes(userMenus: Array<any>): RouteRecordRaw[] {
+export function mapMenus2Routes(userMenus: Array<any>): RouteRecordRaw[] {
   const routes: RouteRecordRaw[] = []
   // 获取所有的路由
   const allRoutes: RouteRecordRaw[] = []
@@ -54,4 +54,20 @@ export function pathMap2Breadcrumbs(userMenus: any[], currentPath: string) {
   pathMap2Menu(userMenus, currentPath, breadcrumbs)
 
   return breadcrumbs
+}
+
+export function mapMenus2Permissions(userMenus: []) {
+  const permission: string[] = []
+  const _recurseGetPermission = (menus: any[]) => {
+    for (const menu of menus) {
+      if (menu.type === 1 || menu.type === 2) {
+        _recurseGetPermission(menu.children ?? [])
+      } else if (menu.type === 3) {
+        permission.push(menu.permission)
+      }
+    }
+  }
+  _recurseGetPermission(userMenus)
+
+  return permission
 }

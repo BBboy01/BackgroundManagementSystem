@@ -1,6 +1,6 @@
 import router from '@/router'
 import cache from '@/utils/cache'
-import mapMenus2Routes from '@/utils/map-menus'
+import { mapMenus2Routes, mapMenus2Permissions } from '@/utils/map-menus'
 import {
   accountLoginRequest,
   requestUserInfoByID,
@@ -18,7 +18,8 @@ const loginModule: Module<ILoginState, IRootState> = {
     return {
       token: '',
       userInfo: {},
-      menus: []
+      menus: [],
+      permissions: []
     }
   },
   getters: {},
@@ -35,6 +36,8 @@ const loginModule: Module<ILoginState, IRootState> = {
       const routes = mapMenus2Routes(menus)
       // routes => router.main.children
       routes.forEach((route) => router.addRoute('main', route))
+      const permissions = mapMenus2Permissions(menus)
+      state.permissions = permissions
     }
   },
   actions: {
