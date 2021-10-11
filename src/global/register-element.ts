@@ -17,7 +17,8 @@ import {
   ElBreadcrumb,
   ElTable,
   ElPagination,
-  ElImage
+  ElImage,
+  ElDialog
 } from 'element-plus'
 import { ElTabPane } from 'element-plus/lib/components/tabs'
 import { ElFormItem } from 'element-plus/lib/components/form'
@@ -59,7 +60,8 @@ const components = [
   ElTable,
   ElTableColumn,
   ElPagination,
-  ElImage
+  ElImage,
+  ElDialog
 ]
 
 export default function (app: App): void {

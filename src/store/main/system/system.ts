@@ -1,4 +1,4 @@
-import { getPageListData } from '@/service/main/system/system'
+import { deletePageData, getPageListData } from '@/service/main/system/system'
 
 import type { Module } from 'vuex'
 import type { ISystemState } from './types'
@@ -67,6 +67,12 @@ const systemModule: Module<ISystemState, IRootState> = {
       const { list, totalCount } = pageResult.data
       commit(`change${pageName.replace(pageName[0], pageName[0].toUpperCase())}List`, list)
       commit(`change${pageName.replace(pageName[0], pageName[0].toUpperCase())}Count`, totalCount)
+    },
+    async deletePageDataAction({ dispatch }, payload: any) {
+      const { pageName, id } = payload
+      const pageUrl = `/${pageName}/${id}`
+      await deletePageData(pageUrl)
+      dispatch('getPageListAction', { pageName, queryInfo: { offset: 0, size: 10 } })
     }
   }
 }

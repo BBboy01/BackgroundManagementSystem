@@ -8,7 +8,9 @@
       v-model:page="pageInfo"
     >
       <template #headerHandler>
-        <el-button type="primary" size="medium" v-if="isCreate">新建用户</el-button>
+        <el-button type="primary" size="medium" v-if="isCreate" @click="handleNewClick">
+          新建用户
+        </el-button>
       </template>
 
       <template #enable="innerData">
@@ -22,9 +24,25 @@
       <template #updateAt="innerData">
         <span>{{ $filters.formatTime(innerData.row.updateAt) }}</span>
       </template>
-      <template #action>
-        <el-button size="mini" type="text" icon="el-icon-edit" v-if="isUpdate">编辑</el-button>
-        <el-button size="mini" type="text" icon="el-icon-delete" v-if="isDelete">删除</el-button>
+      <template #action="innerData">
+        <el-button
+          size="mini"
+          type="text"
+          icon="el-icon-edit"
+          v-if="isUpdate"
+          @click="handleEditClick(innerData.row)"
+        >
+          编辑
+        </el-button>
+        <el-button
+          size="mini"
+          type="text"
+          icon="el-icon-delete"
+          v-if="isDelete"
+          @click="handleDeleteClick(innerData.row)"
+        >
+          删除
+        </el-button>
       </template>
 
       <template v-for="item in otherPropSlots" :key="item.prop" #[item.slotName]="scope">
@@ -55,10 +73,11 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
+  emits: ['newBtnClick', 'editBtnClick'],
+  setup(props, { emit }) {
     const store = useStore()
 
-    const pageInfo = ref({ currentPage: 0, pageSize: 10 })
+    const pageInfo = ref({ currentPage: 1, pageSize: 10 })
 
     const isCreate = usePermission(props.pageName, 'create')
     const isUpdate = usePermission(props.pageName, 'update')
@@ -73,7 +92,7 @@ export default defineComponent({
         pageName: props.pageName,
         pageUrl: 'users/list',
         queryInfo: {
-          offset: pageInfo.value.pageSize * pageInfo.value.currentPage,
+          offset: (pageInfo.value.pageSize - 1) * pageInfo.value.currentPage,
           size: pageInfo.value.pageSize,
           ...queryInfo
         }
@@ -83,7 +102,6 @@ export default defineComponent({
     getPageContent()
 
     const dataList = computed(() => store.getters['systemModule/pageListData'](props.pageName))
-
     const dataCount = computed(() => store.getters['systemModule/pageListCount'](props.pageName))
 
     const handleSelectionChange = (value: any) => {
@@ -98,10 +116,26 @@ export default defineComponent({
       return true
     })
 
+    const handleDeleteClick = (item: any) => {
+      store.dispatch('systemModule/deletePageDataAction', {
+        pageName: props.pageName,
+        id: item.id
+      })
+    }
+    const handleNewClick = () => {
+      emit('newBtnClick')
+    }
+    const handleEditClick = (item: any) => {
+      emit('editBtnClick', item)
+    }
+
     return {
       dataList,
       handleSelectionChange,
       getPageContent,
+      handleDeleteClick,
+      handleNewClick,
+      handleEditClick,
       dataCount,
       pageInfo,
       otherPropSlots,
@@ -114,7 +148,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped lang="scss">
-.page-content {
-}
-</style>
+<style scoped lang="scss"></style>
