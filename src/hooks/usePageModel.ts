@@ -2,22 +2,25 @@ import { ref } from 'vue'
 
 import PageModel from '@/components/page-model'
 
-export default function usePageModel() {
-  const pageModel = ref<InstanceType<typeof PageModel>>()
+export default function usePageModel(newCallback?: () => void, editCallback?: () => void) {
+  const pageModelRef = ref<InstanceType<typeof PageModel>>()
 
   const defaultInfo = ref({})
 
   const handleNewData = () => {
-    if (pageModel.value) {
-      pageModel.value.dialogVisible = true
+    defaultInfo.value = {}
+    if (pageModelRef.value) {
+      pageModelRef.value.dialogVisible = true
     }
+    newCallback && newCallback()
   }
   const handleEditData = (item: any) => {
-    defaultInfo.value = Object.assign({}, item)
-    if (pageModel.value) {
-      pageModel.value.dialogVisible = true
+    defaultInfo.value = { ...item }
+    if (pageModelRef.value) {
+      pageModelRef.value.dialogVisible = true
     }
+    editCallback && editCallback()
   }
 
-  return [pageModel, defaultInfo, handleNewData, handleEditData]
+  return [pageModelRef, defaultInfo, handleNewData, handleEditData]
 }

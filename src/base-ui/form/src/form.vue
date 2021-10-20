@@ -7,7 +7,12 @@
       <el-row>
         <template v-for="item in formItems" :key="item.label">
           <el-col v-bind="colLayout">
-            <el-form-item :label="item.label" :rules="item.rules" :style="itemLayout">
+            <el-form-item
+              :label="item.label"
+              :rules="item.rules"
+              :style="itemLayout"
+              v-if="!item.isHidden"
+            >
               <template v-if="item.type === 'password' || item.type === 'input'">
                 <el-input
                   :placeholder="item.placeholder"

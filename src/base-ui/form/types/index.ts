@@ -12,6 +12,7 @@ export interface IFormItem {
   rules?: any[]
   options?: OptionType[]
   otherOptions?: any
+  isHidden?: boolean
 }
 
 export interface IForm {

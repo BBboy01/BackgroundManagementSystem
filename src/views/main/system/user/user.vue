@@ -36,7 +36,24 @@ export default defineComponent({
   name: 'users',
   setup() {
     const [pageContent, handleResetClick, handleQueryClick] = usePageSearch()
-    const [pageModel, defaultInfo, handleNewData, handleEditData] = usePageModel()
+
+    const newCallback = () => {
+      const passwordItem = modelConfig.formItems.find((item) => item.filed === 'password')
+      if (passwordItem) {
+        passwordItem.isHidden = false
+      }
+    }
+    const editCallback = () => {
+      const passwordItem = modelConfig.formItems.find((item) => item.filed === 'password')
+      if (passwordItem) {
+        passwordItem.isHidden = true
+      }
+    }
+
+    const [pageModel, defaultInfo, handleNewData, handleEditData] = usePageModel(
+      newCallback,
+      editCallback
+    )
 
     return {
       searchFormConfig,
