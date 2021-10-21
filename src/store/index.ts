@@ -7,6 +7,7 @@ import type { IRootState, IStorType } from './types'
 
 import loginModule from './login/login'
 import systemModule from './main/system/system'
+import dashboardModule from './main/analysis/dashboard'
 
 const store = createStore<IRootState>({
   state: () => {
@@ -50,7 +51,7 @@ const store = createStore<IRootState>({
       commit('changeEntireMenu', menuList)
     }
   },
-  modules: { loginModule, systemModule }
+  modules: { loginModule, systemModule, dashboardModule }
 })
 
 export function setupStore() {
