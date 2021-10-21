@@ -84,8 +84,6 @@ export default defineComponent({
     const isQuery = usePermission(props.pageName, 'query')
     const isDelete = usePermission(props.pageName, 'delete')
 
-    watch(pageInfo, () => getPageContent())
-
     const getPageContent = (queryInfo = {}) => {
       if (!isQuery) return
       store.dispatch('systemModule/getPageListAction', {
@@ -98,6 +96,8 @@ export default defineComponent({
         }
       })
     }
+
+    watch(pageInfo, () => getPageContent())
 
     getPageContent()
 

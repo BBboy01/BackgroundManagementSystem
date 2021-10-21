@@ -14,7 +14,12 @@
       @editBtnClick="handleEditData"
     />
 
-    <page-model :modelConfig="modelConfigRef" ref="pageModel" :defaultInfo="defaultInfo" />
+    <page-model
+      :modelConfig="modelConfigRef"
+      ref="pageModel"
+      :defaultInfo="defaultInfo"
+      pageName="users"
+    />
   </div>
 </template>
 

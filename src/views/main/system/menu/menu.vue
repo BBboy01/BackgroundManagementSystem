@@ -12,7 +12,6 @@ import PageContent from '@/components/page-content'
 import { tableContentConfig } from './config/content.config'
 
 export default defineComponent({
-  name: 'menu',
   setup() {
     return { tableContentConfig }
   },
