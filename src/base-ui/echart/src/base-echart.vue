@@ -6,7 +6,6 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, defineProps, withDefaults, watchEffect } from 'vue'
-import * as echarts from 'echarts'
 
 import useEcharts from '../hooks/useEcharts'
 

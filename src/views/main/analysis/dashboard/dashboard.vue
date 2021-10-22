@@ -7,7 +7,9 @@
         </hy-card>
       </el-col>
       <el-col :span="10">
-        <hy-card title="不同城市商品销量"> </hy-card>
+        <hy-card title="不同城市商品销量">
+          <map-echarts :mapData="addressGoodsSale"></map-echarts>
+        </hy-card>
       </el-col>
       <el-col :span="7">
         <hy-card title="分类商品数量（玫瑰图）">
@@ -19,11 +21,13 @@
     <el-row :gutter="10" class="content-row">
       <el-col :span="12">
         <hy-card title="分类商品销量">
-          <line-echarts v-bind="categoryGoodsSale" title=""></line-echarts>
+          <line-echarts v-bind="categoryGoodsSale"></line-echarts>
         </hy-card>
       </el-col>
       <el-col :span="12">
-        <hy-card title="分类商品收藏"> </hy-card>
+        <hy-card title="分类商品收藏">
+          <bar-echarts v-bind="categoryGoodsFavor"></bar-echarts>
+        </hy-card>
       </el-col>
     </el-row>
   </div>
@@ -34,7 +38,13 @@ import { computed, defineComponent, ref } from 'vue'
 import { useStore } from '@/store'
 
 import HyCard from '@/base-ui/card'
-import { PieEcharts, RoseEcharts, LineEcharts } from '@/components/page-echarts'
+import {
+  PieEcharts,
+  RoseEcharts,
+  LineEcharts,
+  BarEcharts,
+  MapEcharts
+} from '@/components/page-echarts'
 
 export default defineComponent({
   name: 'dashboard',
@@ -60,9 +70,26 @@ export default defineComponent({
       return { xLabels, values }
     })
 
-    return { divRef, categoryGoodsCount, categoryGoodsSale }
+    const categoryGoodsFavor = computed(() => {
+      const xLabels: string[] = []
+      const values: any[] = []
+      for (const item of store.state.dashboardModule.categoryGoodsFavor) {
+        xLabels.push(item.name)
+        values.push(item.goodsFavor)
+      }
+      return { xLabels, values }
+    })
+
+    const addressGoodsSale = computed(() => {
+      return store.state.dashboardModule.addressGoodsSale.map((item) => ({
+        name: item.address,
+        value: item.count
+      }))
+    })
+
+    return { divRef, categoryGoodsCount, categoryGoodsSale, categoryGoodsFavor, addressGoodsSale }
   },
-  components: { HyCard, PieEcharts, RoseEcharts, LineEcharts }
+  components: { HyCard, PieEcharts, RoseEcharts, LineEcharts, BarEcharts, MapEcharts }
 })
 </script>
 
